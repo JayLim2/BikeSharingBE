@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.sergei.komarov.bikesharingsupport.models.User;
 import ru.sergei.komarov.bikesharingsupport.services.UsersService;
 
 import java.util.Map;
@@ -48,6 +49,13 @@ public class AuthenticationController {
 
                 response.addProperty("message", "OK");
                 response.addProperty("authenticated", authentication.isAuthenticated());
+
+                JsonObject session = new JsonObject();
+                User user = usersService.getById(username);
+                session.addProperty("login", username);
+                session.addProperty("role", user.getRole().getName());
+
+                response.add("session", session);
             } catch (Exception e) {
                 System.err.println("Failure in autoLogin: " + e);
 
