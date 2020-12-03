@@ -26,6 +26,8 @@ public class Order implements Serializable {
     private Tariff tariff;
 
     @OneToOne(mappedBy = "order")
+    @MapsId
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
     @Column(name = "start_time", nullable = false)
@@ -38,56 +40,63 @@ public class Order implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public Order setId(int id) {
         this.id = id;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Order setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public Bike getBike() {
         return bike;
     }
 
-    public void setBike(Bike bike) {
+    public Order setBike(Bike bike) {
         this.bike = bike;
+        return this;
     }
 
     public Tariff getTariff() {
         return tariff;
     }
 
-    public void setTariff(Tariff tariff) {
+    public Order setTariff(Tariff tariff) {
         this.tariff = tariff;
+        return this;
     }
 
     public Ticket getTicket() {
         return ticket;
     }
 
-    public void setTicket(Ticket ticket) {
+    public Order setTicket(Ticket ticket) {
         this.ticket = ticket;
+        return this;
     }
 
     public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public Order setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public Order setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+        return this;
     }
 
     @Override

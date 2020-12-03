@@ -7,8 +7,6 @@ import javax.persistence.*;
 public class Ticket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq")
-    @SequenceGenerator(name = "ticket_id_seq")
     private int id;
 
     @OneToOne
@@ -19,20 +17,31 @@ public class Ticket {
     @JoinColumn(name = "ticket_status", nullable = false)
     private TicketStatus status;
 
+    public int getId() {
+        return id;
+    }
+
+    public Ticket setId(int id) {
+        this.id = id;
+        return this;
+    }
+
     public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public Ticket setOrder(Order order) {
         this.order = order;
+        return this;
     }
 
     public TicketStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TicketStatus status) {
+    public Ticket setStatus(TicketStatus status) {
         this.status = status;
+        return this;
     }
 
     @Override

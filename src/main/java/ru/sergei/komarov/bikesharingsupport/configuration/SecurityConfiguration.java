@@ -36,38 +36,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/**", "/init/**").hasRole("ADMIN")
-                .antMatchers("/data/**").hasAnyRole("USER", "SUPPORT", "ADMIN")
-                .antMatchers("/", "/login", "/logout", "/resources/**").permitAll()
+                .antMatchers("/api/orders/**", "/api/tickets/**").hasAnyRole("CLIENT", "SUPPORT", "ADMIN")
+                .antMatchers("/api/**").hasRole("ADMIN")
+                .antMatchers("/", "/login", "/logout", "/resources/**", "/init/**", "/checkHealth").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
-
-//        httpSecurity
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                //Доступ только для незарегистрированных пользователей
-//                .antMatchers("/registration").not().fullyAuthenticated()
-//                //Доступ только для пользователей с ролью Администратор
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                //Доступ только для пользователей с ролью Пользователь
-//                .antMatchers("/issues").hasRole("USER")
-//                //Доступ разрешен всем пользователям
-//                .antMatchers("/", "/api/**", "/init/**", "/resources/**").permitAll()
-//                //Все остальные страницы требуют аутентификации
-//                .anyRequest().authenticated()
-//                .and()
-//                //Настройка для входа в систему
-//                .formLogin()
-//                .loginPage("/login")
-//                //Перенарпавление на главную страницу после успешного входа
-//                .defaultSuccessUrl("/")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .logoutSuccessUrl("/");
     }
 
     @Autowired
@@ -78,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200")
+                .allowedOrigins("*")
                 .allowedMethods("*");
     }
 

@@ -6,45 +6,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.sergei.komarov.bikesharingsupport.models.User;
 import ru.sergei.komarov.bikesharingsupport.repositories.UsersRepository;
+import ru.sergei.komarov.bikesharingsupport.services.abstraction.BasicDataService;
+import ru.sergei.komarov.bikesharingsupport.services.abstraction.DataService;
 
 import java.util.List;
 
 @Service
-public class UsersService implements UserDetailsService, BasicDataService<User, String> {
-
-    private final UsersRepository usersRepository;
+public class UsersService extends BasicDataService<User, String> implements UserDetailsService {
 
     public UsersService(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+        super(usersRepository);
     }
 
     @Override
-    public User getById(String username) {
-        return usersRepository.findById(username).orElse(null);
-    }
-
-    @Override
-    public List<User> getAll() {
-        return (List<User>) usersRepository.findAll();
-    }
-
-    @Override
-    public void save(User user) {
-        usersRepository.save(user);
-    }
-
-    @Override
-    public void saveAll(List<User> users) {
-        usersRepository.saveAll(users);
-    }
-
-    @Override
-    public void delete(User item) {
-        usersRepository.delete(item);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return getById(login);
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+        return getById(phone);
     }
 }

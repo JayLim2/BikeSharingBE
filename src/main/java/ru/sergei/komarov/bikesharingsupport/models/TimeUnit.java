@@ -10,15 +10,13 @@ public class TimeUnit {
     @Id
     private String name;
 
-    @OneToMany(mappedBy = "timeUnit")
-    private List<Tariff> tariffs;
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public TimeUnit setName(String name) {
         this.name = name;
+        return this;
     }
 
     @Override

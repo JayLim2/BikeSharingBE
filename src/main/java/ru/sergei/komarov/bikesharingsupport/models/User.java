@@ -9,17 +9,32 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {
+                        "first_name",
+                        "middle_name",
+                        "last_name",
+                        "passport_series",
+                        "passport_number"
+                })
+        })
 public class User implements UserDetails {
 
     @Id
-    private String username;
+    private String phone;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "middle_name")
+    private String middleName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     @Column(name = "passport_series", nullable = false)
     private int passportSeries;
@@ -27,28 +42,17 @@ public class User implements UserDetails {
     @Column(name = "passport_number", nullable = false)
     private int passportNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "role", nullable = false)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
-
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 
     @Override
     public String getUsername() {
-        return username;
+        return phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -60,12 +64,28 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getPassportSeries() {
@@ -119,6 +139,6 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return username + " (" + fullName + ")";
+        return String.format("%s %s %s", lastName, firstName, middleName);
     }
 }

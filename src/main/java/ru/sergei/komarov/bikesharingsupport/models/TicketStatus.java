@@ -10,23 +10,13 @@ public class TicketStatus {
     @Id
     private String name;
 
-    @OneToMany(mappedBy = "status")
-    private List<Ticket> tickets;
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public TicketStatus setName(String name) {
         this.name = name;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+        return this;
     }
 
     @Override

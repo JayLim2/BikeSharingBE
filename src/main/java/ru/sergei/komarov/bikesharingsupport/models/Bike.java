@@ -16,39 +16,31 @@ public class Bike {
 
     private String model;
 
-    @OneToMany(mappedBy = "bike")
-    private List<Order> orders;
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Bike setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public Bike setBrand(String brand) {
         this.brand = brand;
+        return this;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public Bike setModel(String model) {
         this.model = model;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+        return this;
     }
 
     @Override

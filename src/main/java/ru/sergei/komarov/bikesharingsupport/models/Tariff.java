@@ -17,8 +17,32 @@ public class Tariff {
     @JoinColumn(name = "time_unit", nullable = false)
     private TimeUnit timeUnit;
 
-    @OneToMany(mappedBy = "tariff")
-    private List<Order> orders;
+    public String getName() {
+        return name;
+    }
+
+    public Tariff setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public double getPricePerTimeUnit() {
+        return pricePerTimeUnit;
+    }
+
+    public Tariff setPricePerTimeUnit(double pricePerTimeUnit) {
+        this.pricePerTimeUnit = pricePerTimeUnit;
+        return this;
+    }
+
+    public TimeUnit getTimeUnit() {
+        return timeUnit;
+    }
+
+    public Tariff setTimeUnit(TimeUnit timeUnit) {
+        this.timeUnit = timeUnit;
+        return this;
+    }
 
     @Override
     public String toString() {

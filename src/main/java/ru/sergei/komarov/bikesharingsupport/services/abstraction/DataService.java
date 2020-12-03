@@ -1,8 +1,8 @@
-package ru.sergei.komarov.bikesharingsupport.services;
+package ru.sergei.komarov.bikesharingsupport.services.abstraction;
 
 import java.util.List;
 
-public interface BasicDataService<T, ID> {
+public interface DataService<T, ID> {
 
     T getById(ID id);
 
@@ -13,5 +13,9 @@ public interface BasicDataService<T, ID> {
     void saveAll(List<T> items);
 
     void delete(T item);
+
+    void deleteById(ID id);
+
+    void deleteAll();
 
 }
