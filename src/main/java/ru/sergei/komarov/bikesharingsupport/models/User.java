@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users",
@@ -51,8 +51,9 @@ public class User implements UserDetails {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public User setPhone(String phone) {
         this.phone = phone;
+        return this;
     }
 
     @Override
@@ -60,56 +61,63 @@ public class User implements UserDetails {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getMiddleName() {
         return middleName;
     }
 
-    public void setMiddleName(String middleName) {
+    public User setMiddleName(String middleName) {
         this.middleName = middleName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public int getPassportSeries() {
         return passportSeries;
     }
 
-    public void setPassportSeries(int passportSeries) {
+    public User setPassportSeries(int passportSeries) {
         this.passportSeries = passportSeries;
+        return this;
     }
 
     public int getPassportNumber() {
         return passportNumber;
     }
 
-    public void setPassportNumber(int passportNumber) {
+    public User setPassportNumber(int passportNumber) {
         this.passportNumber = passportNumber;
+        return this;
     }
 
     public Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public User setRole(Role role) {
         this.role = role;
+        return this;
     }
 
     @Override
@@ -140,5 +148,24 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return String.format("%s %s %s", lastName, firstName, middleName);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return passportSeries == user.passportSeries &&
+                passportNumber == user.passportNumber &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(middleName, user.middleName) &&
+                Objects.equals(lastName, user.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(phone, password, firstName, middleName, lastName, passportSeries, passportNumber);
     }
 }
