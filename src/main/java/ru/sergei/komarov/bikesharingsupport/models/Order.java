@@ -25,7 +25,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "tariff_name", nullable = false)
     private Tariff tariff;
 
-    @OneToOne
+    @OneToOne(mappedBy = "order")
     private Ticket ticket;
 
     @Column(name = "start_time", nullable = false)

@@ -11,7 +11,8 @@ public class Ticket {
     private int id;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "order_id", referencedColumnName = "id")
+    @MapsId
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne

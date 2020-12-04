@@ -1,5 +1,5 @@
-DROP TABLE public.orders;
 DROP TABLE public.tickets;
+DROP TABLE public.orders;
 DROP TABLE public.bikes;
 DROP TABLE public.ticket_statuses;
 DROP TABLE public.tariffs;
@@ -68,9 +68,9 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_uk UNIQUE (first_name, middle_name, last_name, passport_series, passport_number)
 );
 
-CREATE TABLE IF NOT EXISTS public.orders
+CREATE TABLE public.orders
 (
-    id   int4         NOT NULL DEFAULT nextval('order_id_seq'),
+    id          int4         NOT NULL DEFAULT nextval('order_id_seq'),
     end_time    timestamp    NULL,
     start_time  timestamp    NOT NULL,
     bike_id     int4         NOT NULL,
@@ -87,8 +87,8 @@ CREATE TABLE public.tickets
     order_id      int4         NOT NULL,
     ticket_status varchar(255) NOT NULL,
     CONSTRAINT tickets_pkey PRIMARY KEY (order_id),
-    CONSTRAINT order_fk FOREIGN KEY  (order_id) REFERENCES orders (id),
-    CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name)
+    CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name),
+    CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES orders (id)
 );
 
 INSERT INTO public.users (phone, first_name, last_name, middle_name, passport_number, passport_series, "password",
@@ -132,17 +132,25 @@ VALUES ('Поиск оператора'),
 ;
 
 INSERT INTO public.bikes (brand, model)
-VALUES ('GT', 'Team Conway'),
-       ('GT', 'Team Comp Conway'),
-       ('GT', 'Team BK'),
-       ('Merida', 'eSPEEDER'),
-       ('Merida', 'eSILEX+'),
-       ('Merida', 'eONE-FORTY'),
-       ('Merida', 'eBIG.TOUR'),
-       ('Stels', 'Navigator-500 V 26" V020'),
-       ('Stels', 'Navigator-700 MD 27.5" F010'),
-       ('Cube', 'Kathmandu Pro'),
-       ('Nordway', 'Cruise'),
-       ('Nordway', 'Active 300 Disc'),
-       ('Nordway', 'Vortex')
+VALUES ('GT', 'Team Conway'),                       -- 1
+       ('GT', 'Team Comp Conway'),                  -- 2
+       ('GT', 'Team BK'),                           -- 3
+       ('Merida', 'eSPEEDER'),                      -- 4
+       ('Merida', 'eSILEX+'),                       -- 5
+       ('Merida', 'eONE-FORTY'),                    -- 6
+       ('Merida', 'eBIG.TOUR'),                     -- 7
+       ('Stels', 'Navigator-500 V 26" V020'),       -- 8
+       ('Stels', 'Navigator-700 MD 27.5" F010'),    -- 9
+       ('Cube', 'Kathmandu Pro'),                   -- 10
+       ('Nordway', 'Cruise'),                       -- 11
+       ('Nordway', 'Active 300 Disc'),              -- 12
+       ('Nordway', 'Vortex')                        -- 13
+;
+
+INSERT INTO public.orders (start_time, end_time, bike_id, tariff_name, username)
+VALUES (TIMESTAMP '2020-11-11 08:37:48', TIMESTAMP '2020-11-11 09:21:07', 2, 'Эконом', '79001002031'),
+       (TIMESTAMP '2020-06-03 12:01:20', TIMESTAMP '2020-06-07 06:42:37', 11, 'Travel', '79001002034'),
+       (TIMESTAMP '2020-07-16 21:15:39', NULL, 7, 'Travel', '79001002034'),
+       (TIMESTAMP '2020-09-24 09:27:43', NULL, 8, 'Эконом', '79001002032'),
+       (TIMESTAMP '2020-03-25 14:56:58', TIMESTAMP '2020-03-25 16:32:49', 4, 'Комфорт', '79001002033')
 ;
