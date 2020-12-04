@@ -1,5 +1,16 @@
+DROP TABLE public.orders;
+DROP TABLE public.tickets;
+DROP TABLE public.bikes;
+DROP TABLE public.ticket_statuses;
+DROP TABLE public.tariffs;
+DROP TABLE public.time_units;
+DROP TABLE public.users;
+
+DROP SEQUENCE public.bike_id_seq;
+DROP SEQUENCE public.order_id_seq;
+
 CREATE SEQUENCE public.bike_id_seq
-    INCREMENT BY 50
+    INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
     START 1
@@ -7,15 +18,7 @@ CREATE SEQUENCE public.bike_id_seq
     NO CYCLE;
 
 CREATE SEQUENCE public.order_id_seq
-    INCREMENT BY 50
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    START 1
-    CACHE 1
-    NO CYCLE;
-
-CREATE SEQUENCE public.ticket_id_seq
-    INCREMENT BY 50
+    INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
     START 1
@@ -24,7 +27,7 @@ CREATE SEQUENCE public.ticket_id_seq
 
 CREATE TABLE IF NOT EXISTS public.bikes
 (
-    id    int4         NOT NULL,
+    id    int4         NOT NULL DEFAULT nextval('bike_id_seq'),
     brand varchar(255) NULL,
     model varchar(255) NULL,
     CONSTRAINT bikes_pkey PRIMARY KEY (id)
@@ -67,27 +70,25 @@ CREATE TABLE IF NOT EXISTS public.users
 
 CREATE TABLE IF NOT EXISTS public.orders
 (
-    ticket_id   int4         NOT NULL,
+    id   int4         NOT NULL DEFAULT nextval('order_id_seq'),
     end_time    timestamp    NULL,
     start_time  timestamp    NOT NULL,
     bike_id     int4         NOT NULL,
     tariff_name varchar(255) NOT NULL,
     username    varchar(255) NOT NULL,
-    CONSTRAINT orders_pkey PRIMARY KEY (ticket_id),
+    CONSTRAINT orders_pkey PRIMARY KEY (id),
     CONSTRAINT user_fk FOREIGN KEY (username) REFERENCES users (phone),
     CONSTRAINT tariff_fk FOREIGN KEY (tariff_name) REFERENCES tariffs (name),
     CONSTRAINT bike_fk FOREIGN KEY (bike_id) REFERENCES bikes (id)
 );
 
-
-CREATE TABLE IF NOT EXISTS public.tickets
+CREATE TABLE public.tickets
 (
-    id            int4         NOT NULL,
-    order_id      int4         NOT NULL, --make great again
+    order_id      int4         NOT NULL,
     ticket_status varchar(255) NOT NULL,
-    CONSTRAINT tickets_pkey PRIMARY KEY (id),
-    CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name),
-    CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES orders (ticket_id)
+    CONSTRAINT tickets_pkey PRIMARY KEY (order_id),
+    CONSTRAINT order_fk FOREIGN KEY  (order_id) REFERENCES orders (id),
+    CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name)
 );
 
 INSERT INTO public.users (phone, first_name, last_name, middle_name, passport_number, passport_series, "password",
@@ -145,4 +146,3 @@ VALUES ('GT', 'Team Conway'),
        ('Nordway', 'Active 300 Disc'),
        ('Nordway', 'Vortex')
 ;
-

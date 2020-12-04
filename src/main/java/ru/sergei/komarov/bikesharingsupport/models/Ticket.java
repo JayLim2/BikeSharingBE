@@ -7,10 +7,11 @@ import javax.persistence.*;
 public class Ticket {
 
     @Id
+    @Column(name = "order_id")
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @PrimaryKeyJoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
     @ManyToOne

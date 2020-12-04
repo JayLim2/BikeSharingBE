@@ -10,7 +10,7 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_seq")
-    @SequenceGenerator(name = "order_id_seq")
+    @SequenceGenerator(name = "order_id_seq", allocationSize = 1)
     private int id;
 
     @ManyToOne
@@ -25,9 +25,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "tariff_name", nullable = false)
     private Tariff tariff;
 
-    @OneToOne(mappedBy = "order")
-    @MapsId
-    @JoinColumn(name = "ticket_id")
+    @OneToOne
     private Ticket ticket;
 
     @Column(name = "start_time", nullable = false)

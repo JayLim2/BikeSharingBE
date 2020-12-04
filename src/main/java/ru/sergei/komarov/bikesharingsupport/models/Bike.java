@@ -9,7 +9,7 @@ public class Bike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bike_id_seq")
-    @SequenceGenerator(name = "bike_id_seq")
+    @SequenceGenerator(name = "bike_id_seq", allocationSize = 1)
     private int id;
 
     private String brand;
