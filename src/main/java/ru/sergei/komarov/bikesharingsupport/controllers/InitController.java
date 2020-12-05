@@ -91,7 +91,7 @@ public class InitController {
 
         for (int i = 1; i <= 5; i++) {
             User user = new User();
-            user.setPhone(nextPhone());
+            user.setUsername(nextPhone());
             user.setPassword(getDefaultPasswordHash());
             fillRandom(user);
             user.setRole(Role.CLIENT);
@@ -100,7 +100,7 @@ public class InitController {
 
         for (int i = 1; i <= 3; i++) {
             User user = new User();
-            user.setPhone(nextPhone());
+            user.setUsername(nextPhone());
             user.setPassword(getDefaultPasswordHash());
             fillRandom(user);
             user.setRole(Role.SUPPORT);
@@ -109,7 +109,7 @@ public class InitController {
 
         for (int i = 1; i <= 1; i++) {
             User user = new User();
-            user.setPhone(nextPhone());
+            user.setUsername(nextPhone());
             user.setPassword(getDefaultPasswordHash());
             fillRandom(user);
             user.setRole(Role.ADMIN);

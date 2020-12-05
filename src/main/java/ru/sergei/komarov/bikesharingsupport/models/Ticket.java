@@ -10,12 +10,12 @@ public class Ticket {
     @Column(name = "order_id")
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
     @MapsId
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "ticket_status", nullable = false)
     private TicketStatus status;
 

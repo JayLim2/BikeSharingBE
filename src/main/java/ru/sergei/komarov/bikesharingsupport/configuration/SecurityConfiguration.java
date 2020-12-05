@@ -38,13 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        "/api/orders/**",
-                        "/api/tickets/**"
-                ).hasAnyAuthority("CLIENT", "SUPPORT", "ADMIN")
-                .antMatchers(
-                        "/api/**"
-                ).hasAuthority("ADMIN")
-                .antMatchers(
                         "/",
                         "/login",
                         "/logout",
@@ -53,6 +46,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                         "/checkHealth",
                         "/api/users/get*"
                 ).permitAll()
+                .antMatchers(
+                        "/api/orders/**",
+                        "/api/tickets/**"
+                ).hasAnyAuthority("CLIENT", "SUPPORT", "ADMIN")
+                .antMatchers(
+                        "/api/**"
+                ).hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

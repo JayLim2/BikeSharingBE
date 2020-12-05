@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.sergei.komarov.bikesharingsupport.models.User;
 import ru.sergei.komarov.bikesharingsupport.repositories.UsersRepository;
 import ru.sergei.komarov.bikesharingsupport.services.abstraction.BasicDataService;
-import ru.sergei.komarov.bikesharingsupport.services.abstraction.DataService;
-
-import java.util.List;
 
 @Service
 public class UsersService extends BasicDataService<User, String> implements UserDetailsService {
