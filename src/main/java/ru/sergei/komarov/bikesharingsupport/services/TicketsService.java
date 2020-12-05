@@ -3,6 +3,7 @@ package ru.sergei.komarov.bikesharingsupport.services;
 import org.springframework.stereotype.Service;
 import ru.sergei.komarov.bikesharingsupport.models.Message;
 import ru.sergei.komarov.bikesharingsupport.models.Ticket;
+import ru.sergei.komarov.bikesharingsupport.models.User;
 import ru.sergei.komarov.bikesharingsupport.repositories.TicketsRepository;
 import ru.sergei.komarov.bikesharingsupport.services.abstraction.BasicDataService;
 
@@ -13,6 +14,10 @@ public class TicketsService extends BasicDataService<Ticket, Integer> {
 
     public TicketsService(TicketsRepository ticketsRepository) {
         super(ticketsRepository);
+    }
+
+    public List<Ticket> getByUser(String userId) {
+        return ((TicketsRepository) repository).findByUser(userId);
     }
 
     public void save(Ticket ticket) {

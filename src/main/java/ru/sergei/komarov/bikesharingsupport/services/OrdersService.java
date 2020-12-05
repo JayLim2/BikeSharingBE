@@ -14,7 +14,7 @@ public class OrdersService extends BasicDataService<Order, Integer> {
         super(ordersRepository);
     }
 
-    public List<Order> getOrdersByUser(String userId) {
+    public List<Order> getByUser(String userId) {
         return ((OrdersRepository) repository).findByUser(userId);
     }
 

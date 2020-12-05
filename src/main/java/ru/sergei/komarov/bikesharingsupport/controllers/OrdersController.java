@@ -20,7 +20,7 @@ public class OrdersController extends BasicRestController<Order, Integer> {
 
     @GetMapping("/get/user")
     public List<Order> getByUser(@RequestParam String userId) {
-        return ((OrdersService) service).getOrdersByUser(userId);
+        return ((OrdersService) service).getByUser(userId);
     }
 
 }
