@@ -36,12 +36,12 @@ public abstract class BasicRestController<T, ID> implements DataController<T, ID
     }
 
     @DeleteMapping("/delete")
-    public void delete(T entity) {
+    public void delete(@RequestBody T entity) {
         service.delete(entity);
     }
 
-    @DeleteMapping("/delete/id")
-    public void deleteById(@RequestParam ID id) {
+    @DeleteMapping("/delete/{id}")
+    public void deleteById(@PathVariable ID id) {
         service.deleteById(id);
     }
 
