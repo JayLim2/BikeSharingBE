@@ -1,3 +1,4 @@
+DROP TABLE public.messages;
 DROP TABLE public.tickets;
 DROP TABLE public.orders;
 DROP TABLE public.bikes;
@@ -8,6 +9,8 @@ DROP TABLE public.users;
 
 DROP SEQUENCE public.bike_id_seq;
 DROP SEQUENCE public.order_id_seq;
+DROP SEQUENCE public.message_id_seq;
+DROP SEQUENCE public.ticket_id_seq;
 
 CREATE SEQUENCE public.bike_id_seq
     INCREMENT BY 1
@@ -18,6 +21,22 @@ CREATE SEQUENCE public.bike_id_seq
     NO CYCLE;
 
 CREATE SEQUENCE public.order_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+
+CREATE SEQUENCE public.message_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1
+    NO CYCLE;
+
+CREATE SEQUENCE public.ticket_id_seq
     INCREMENT BY 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
@@ -75,20 +94,31 @@ CREATE TABLE public.orders
     start_time  timestamp    NOT NULL,
     bike_id     int4         NOT NULL,
     tariff_name varchar(255) NOT NULL,
-    username    varchar(255) NOT NULL,
+    user_id     varchar(255) NOT NULL,
     CONSTRAINT orders_pkey PRIMARY KEY (id),
-    CONSTRAINT user_fk FOREIGN KEY (username) REFERENCES users (phone),
+    CONSTRAINT user_fk FOREIGN KEY (user_id) REFERENCES users (phone),
     CONSTRAINT tariff_fk FOREIGN KEY (tariff_name) REFERENCES tariffs (name),
     CONSTRAINT bike_fk FOREIGN KEY (bike_id) REFERENCES bikes (id)
 );
 
 CREATE TABLE public.tickets
 (
+    id            int4         NOT NULL DEFAULT nextval('ticket_id_seq'),
     order_id      int4         NOT NULL,
     ticket_status varchar(255) NOT NULL,
-    CONSTRAINT tickets_pkey PRIMARY KEY (order_id),
+    CONSTRAINT tickets_pkey PRIMARY KEY (id),
     CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name),
     CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES orders (id)
+);
+
+CREATE TABLE public.messages
+(
+    id        int4         NOT NULL DEFAULT nextval('message_id_seq'),
+    date_time timestamp    NULL,
+    "text"    varchar(255) NOT NULL,
+    ticket_id int4         NOT NULL,
+    CONSTRAINT messages_pkey PRIMARY KEY (id),
+    CONSTRAINT ticket_fk FOREIGN KEY (ticket_id) REFERENCES tickets (id)
 );
 
 INSERT INTO public.users (phone, first_name, last_name, middle_name, passport_number, passport_series, "password",
@@ -132,22 +162,22 @@ VALUES ('Поиск оператора'),
 ;
 
 INSERT INTO public.bikes (brand, model)
-VALUES ('GT', 'Team Conway'),                       -- 1
-       ('GT', 'Team Comp Conway'),                  -- 2
-       ('GT', 'Team BK'),                           -- 3
-       ('Merida', 'eSPEEDER'),                      -- 4
-       ('Merida', 'eSILEX+'),                       -- 5
-       ('Merida', 'eONE-FORTY'),                    -- 6
-       ('Merida', 'eBIG.TOUR'),                     -- 7
-       ('Stels', 'Navigator-500 V 26" V020'),       -- 8
-       ('Stels', 'Navigator-700 MD 27.5" F010'),    -- 9
-       ('Cube', 'Kathmandu Pro'),                   -- 10
-       ('Nordway', 'Cruise'),                       -- 11
-       ('Nordway', 'Active 300 Disc'),              -- 12
-       ('Nordway', 'Vortex')                        -- 13
+VALUES ('GT', 'Team Conway'),                    -- 1
+       ('GT', 'Team Comp Conway'),               -- 2
+       ('GT', 'Team BK'),                        -- 3
+       ('Merida', 'eSPEEDER'),                   -- 4
+       ('Merida', 'eSILEX+'),                    -- 5
+       ('Merida', 'eONE-FORTY'),                 -- 6
+       ('Merida', 'eBIG.TOUR'),                  -- 7
+       ('Stels', 'Navigator-500 V 26" V020'),    -- 8
+       ('Stels', 'Navigator-700 MD 27.5" F010'), -- 9
+       ('Cube', 'Kathmandu Pro'),                -- 10
+       ('Nordway', 'Cruise'),                    -- 11
+       ('Nordway', 'Active 300 Disc'),           -- 12
+       ('Nordway', 'Vortex') -- 13
 ;
 
-INSERT INTO public.orders (start_time, end_time, bike_id, tariff_name, username)
+INSERT INTO public.orders (start_time, end_time, bike_id, tariff_name, user_id)
 VALUES (TIMESTAMP '2020-11-11 08:37:48', TIMESTAMP '2020-11-11 09:21:07', 2, 'Эконом', '79001002031'),
        (TIMESTAMP '2020-06-03 12:01:20', TIMESTAMP '2020-06-07 06:42:37', 11, 'Travel', '79001002034'),
        (TIMESTAMP '2020-07-16 21:15:39', NULL, 7, 'Travel', '79001002034'),

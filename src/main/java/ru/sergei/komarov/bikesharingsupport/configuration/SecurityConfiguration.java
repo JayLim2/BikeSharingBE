@@ -48,7 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 ).permitAll()
                 .antMatchers(
                         "/api/orders/**",
-                        "/api/tickets/**"
+                        "/api/tickets/**",
+                        "/api/messages/**"
                 ).hasAnyAuthority("CLIENT", "SUPPORT", "ADMIN")
                 .antMatchers(
                         "/api/**"

@@ -1,6 +1,7 @@
 package ru.sergei.komarov.bikesharingsupport.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import ru.sergei.komarov.bikesharingsupport.common.Constants;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ public class Order implements Serializable {
     private int id;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "username", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -31,11 +32,11 @@ public class Order implements Serializable {
     private Ticket ticket;
 
     @Column(name = "start_time", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PRETTY_DATE_TIME)
     private LocalDateTime startTime;
 
     @Column(name = "end_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PRETTY_DATE_TIME)
     private LocalDateTime endTime;
 
     public int getId() {

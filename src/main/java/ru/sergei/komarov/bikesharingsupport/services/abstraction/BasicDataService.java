@@ -21,7 +21,7 @@ public abstract class BasicDataService<T, ID> implements DataService<T, ID> {
 
     @Override
     public List<T> getAll() {
-        return (List<T>)repository.findAll();
+        return (List<T>) repository.findAll();
     }
 
     @Override
@@ -48,4 +48,5 @@ public abstract class BasicDataService<T, ID> implements DataService<T, ID> {
     public void deleteAll() {
         repository.deleteAll();
     }
+
 }

@@ -1,23 +1,31 @@
 package ru.sergei.komarov.bikesharingsupport.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tickets")
 public class Ticket {
 
     @Id
-    @Column(name = "order_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq")
+    @SequenceGenerator(name = "ticket_id_seq", allocationSize = 1)
     private int id;
 
     @OneToOne(cascade = CascadeType.REFRESH)
-    @MapsId
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", unique = true)
+    @JsonIgnoreProperties({"ticket"})
     private Order order;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "ticket_status", nullable = false)
     private TicketStatus status;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
+    @JsonIgnoreProperties({"ticket"})
+    private List<Message> messages;
 
     public int getId() {
         return id;
@@ -46,8 +54,20 @@ public class Ticket {
         return this;
     }
 
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
     @Override
     public String toString() {
-        return order.toString() + " " + order.getUser().toString();
+        return Integer.toString(id);
+//        return order != null ?
+//                (order.getUser() != null ? order.getUser().toString() : "")
+//                : "null";
+//        return order.toString() + " " + order.getUser().toString();
     }
 }

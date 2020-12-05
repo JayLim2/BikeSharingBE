@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
-import java.net.InetAddress;
-
 @SpringBootApplication
 public class BikeSharingApplication {
 
