@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS public.time_units
 CREATE TABLE IF NOT EXISTS public.ticket_statuses
 (
     "name" varchar(255) NOT NULL,
+    background_color varchar(255) NULL,
     CONSTRAINT ticket_statuses_pkey PRIMARY KEY (name)
 );
 
@@ -154,11 +155,11 @@ VALUES ('Эконом', 2, 'мин'),
        ('Travel', 2399, 'день')
 ;
 
-INSERT INTO public.ticket_statuses ("name")
-VALUES ('Поиск оператора'),
-       ('В работе'),
-       ('Вопрос решен'),
-       ('Вопрос не решен')
+INSERT INTO public.ticket_statuses ("name", background_color)
+VALUES ('Поиск оператора', NULL),
+       ('В работе', '#ff5e00'),
+       ('Вопрос решен', 'green'),
+       ('Вопрос не решен', 'red')
 ;
 
 INSERT INTO public.bikes (brand, model)

@@ -10,6 +10,9 @@ public class TicketStatus {
     @Id
     private String name;
 
+    @Column(name = "background_color")
+    private String backgroundHexColor;
+
     public String getName() {
         return name;
     }
@@ -17,6 +20,14 @@ public class TicketStatus {
     public TicketStatus setName(String name) {
         this.name = name;
         return this;
+    }
+
+    public String getBackgroundHexColor() {
+        return backgroundHexColor;
+    }
+
+    public void setBackgroundHexColor(String backgroundHexColor) {
+        this.backgroundHexColor = backgroundHexColor;
     }
 
     @Override
