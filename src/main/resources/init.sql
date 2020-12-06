@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS public.time_units
 
 CREATE TABLE IF NOT EXISTS public.ticket_statuses
 (
-    "name" varchar(255) NOT NULL,
+    "name"           varchar(255) NOT NULL,
     background_color varchar(255) NULL,
     CONSTRAINT ticket_statuses_pkey PRIMARY KEY (name)
 );
@@ -118,8 +118,10 @@ CREATE TABLE public.messages
     date_time timestamp    NULL,
     "text"    varchar(255) NOT NULL,
     ticket_id int4         NOT NULL,
+    user_id   varchar(255) NOT NULL,
     CONSTRAINT messages_pkey PRIMARY KEY (id),
-    CONSTRAINT ticket_fk FOREIGN KEY (ticket_id) REFERENCES tickets (id)
+    CONSTRAINT ticket_fk FOREIGN KEY (ticket_id) REFERENCES tickets (id),
+    CONSTRAINT user_fk FOREIGN KEY (user_id) REFERENCES users(phone)
 );
 
 INSERT INTO public.users (phone, first_name, last_name, middle_name, passport_number, passport_series, "password",

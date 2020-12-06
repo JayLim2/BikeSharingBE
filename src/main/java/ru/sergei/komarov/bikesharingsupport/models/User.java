@@ -1,6 +1,5 @@
 package ru.sergei.komarov.bikesharingsupport.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

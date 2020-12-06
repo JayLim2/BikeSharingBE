@@ -25,6 +25,10 @@ public class Message {
     @Column(nullable = false)
     private String text;
 
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public int getId() {
         return id;
     }
@@ -57,6 +61,14 @@ public class Message {
         this.text = text;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -64,6 +76,7 @@ public class Message {
                 ", ticket=" + ticket +
                 ", dateTime=" + dateTime +
                 ", text='" + text + '\'' +
+                ", user=" + user +
                 '}';
     }
 }
