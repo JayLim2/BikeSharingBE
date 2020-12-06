@@ -52,6 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                         "/api/messages/**"
                 ).hasAnyAuthority("CLIENT", "SUPPORT", "ADMIN")
                 .antMatchers(
+                        "/api/users/get/all/support"
+                ).hasAnyAuthority("SUPPORT", "ADMIN")
+                .antMatchers(
                         "/api/**"
                 ).hasAuthority("ADMIN")
                 .anyRequest().authenticated()

@@ -4,9 +4,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.sergei.komarov.bikesharingsupport.models.Role;
 import ru.sergei.komarov.bikesharingsupport.models.User;
 import ru.sergei.komarov.bikesharingsupport.repositories.UsersRepository;
 import ru.sergei.komarov.bikesharingsupport.services.abstraction.BasicDataService;
+
+import java.util.List;
 
 @Service
 public class UsersService extends BasicDataService<User, String> implements UserDetailsService {
@@ -19,4 +22,9 @@ public class UsersService extends BasicDataService<User, String> implements User
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         return getById(phone);
     }
+
+    public List<User> getByRole(List<Role> roles) {
+        return ((UsersRepository) repository).findAllByRoleIn(roles);
+    }
+
 }
