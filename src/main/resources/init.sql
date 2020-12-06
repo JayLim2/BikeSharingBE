@@ -160,7 +160,7 @@ VALUES ('Эконом', 2, 'мин'),
 ;
 
 INSERT INTO public.ticket_statuses ("name", background_color)
-VALUES ('Поиск оператора', NULL),
+VALUES ('Поиск оператора', 'black'),
        ('В работе', '#ff5e00'),
        ('Вопрос решен', 'green'),
        ('Вопрос не решен', 'red')
