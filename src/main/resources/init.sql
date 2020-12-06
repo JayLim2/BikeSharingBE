@@ -111,7 +111,8 @@ CREATE TABLE public.tickets
     CONSTRAINT tickets_pkey PRIMARY KEY (id),
     CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name),
     CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES orders (id),
-    CONSTRAINT user_fk FOREIGN KEY (assignee_id) REFERENCES users (phone)
+    CONSTRAINT user_fk FOREIGN KEY (assignee_id) REFERENCES users (phone),
+    CONSTRAINT unique_ticket UNIQUE (order_id)
 );
 
 CREATE TABLE public.messages
