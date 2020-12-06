@@ -2,6 +2,7 @@ package ru.sergei.komarov.bikesharingsupport.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ru.sergei.komarov.bikesharingsupport.common.Constants;
+import ru.sergei.komarov.bikesharingsupport.common.Utils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -38,6 +39,9 @@ public class Order implements Serializable {
     @Column(name = "end_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PRETTY_DATE_TIME)
     private LocalDateTime endTime;
+
+    @Transient
+    private int cost;
 
     public int getId() {
         return id;
@@ -100,6 +104,17 @@ public class Order implements Serializable {
     public Order setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
         return this;
+    }
+
+    public int getCost() {
+        if (cost == 0) {
+            cost = Utils.getCost(this);
+        }
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     @Override

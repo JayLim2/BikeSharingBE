@@ -27,6 +27,10 @@ public class Ticket {
     @JsonIgnoreProperties({"ticket"})
     private List<Message> messages;
 
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "assignee_id")
+    private User assignee;
+
     public int getId() {
         return id;
     }
@@ -62,12 +66,16 @@ public class Ticket {
         this.messages = messages;
     }
 
+    public User getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(id);
-//        return order != null ?
-//                (order.getUser() != null ? order.getUser().toString() : "")
-//                : "null";
-//        return order.toString() + " " + order.getUser().toString();
     }
 }

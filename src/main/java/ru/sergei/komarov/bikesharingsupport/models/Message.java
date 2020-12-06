@@ -26,7 +26,7 @@ public class Message {
     private String text;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private User user;
 
     public int getId() {

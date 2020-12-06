@@ -107,9 +107,11 @@ CREATE TABLE public.tickets
     id            int4         NOT NULL DEFAULT nextval('ticket_id_seq'),
     order_id      int4         NOT NULL,
     ticket_status varchar(255) NOT NULL,
+    assignee_id   varchar(255) NULL,
     CONSTRAINT tickets_pkey PRIMARY KEY (id),
     CONSTRAINT status_fk FOREIGN KEY (ticket_status) REFERENCES ticket_statuses (name),
-    CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES orders (id)
+    CONSTRAINT order_fk FOREIGN KEY (order_id) REFERENCES orders (id),
+    CONSTRAINT user_fk FOREIGN KEY (assignee_id) REFERENCES users (phone)
 );
 
 CREATE TABLE public.messages
@@ -118,10 +120,10 @@ CREATE TABLE public.messages
     date_time timestamp    NULL,
     "text"    varchar(255) NOT NULL,
     ticket_id int4         NOT NULL,
-    user_id   varchar(255) NOT NULL,
+    author_id varchar(255) NOT NULL,
     CONSTRAINT messages_pkey PRIMARY KEY (id),
     CONSTRAINT ticket_fk FOREIGN KEY (ticket_id) REFERENCES tickets (id),
-    CONSTRAINT user_fk FOREIGN KEY (user_id) REFERENCES users(phone)
+    CONSTRAINT user_fk FOREIGN KEY (author_id) REFERENCES users (phone)
 );
 
 INSERT INTO public.users (phone, first_name, last_name, middle_name, passport_number, passport_series, "password",
