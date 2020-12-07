@@ -1,16 +1,16 @@
-DROP TABLE public.messages;
-DROP TABLE public.tickets;
-DROP TABLE public.orders;
-DROP TABLE public.bikes;
-DROP TABLE public.ticket_statuses;
-DROP TABLE public.tariffs;
-DROP TABLE public.time_units;
-DROP TABLE public.users;
+DROP TABLE IF EXISTS public.messages;
+DROP TABLE IF EXISTS  public.tickets;
+DROP TABLE IF EXISTS  public.orders;
+DROP TABLE IF EXISTS  public.bikes;
+DROP TABLE IF EXISTS  public.ticket_statuses;
+DROP TABLE IF EXISTS  public.tariffs;
+DROP TABLE IF EXISTS  public.time_units;
+DROP TABLE IF EXISTS  public.users;
 
-DROP SEQUENCE public.bike_id_seq;
-DROP SEQUENCE public.order_id_seq;
-DROP SEQUENCE public.message_id_seq;
-DROP SEQUENCE public.ticket_id_seq;
+DROP SEQUENCE IF EXISTS  public.bike_id_seq;
+DROP SEQUENCE IF EXISTS  public.order_id_seq;
+DROP SEQUENCE IF EXISTS  public.message_id_seq;
+DROP SEQUENCE IF EXISTS  public.ticket_id_seq;
 
 CREATE SEQUENCE public.bike_id_seq
     INCREMENT BY 1
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_uk UNIQUE (first_name, middle_name, last_name, passport_series, passport_number)
 );
 
-CREATE TABLE public.orders
+CREATE TABLE IF NOT EXISTS public.orders
 (
     id          int4         NOT NULL DEFAULT nextval('order_id_seq'),
     end_time    timestamp    NULL,
@@ -102,7 +102,7 @@ CREATE TABLE public.orders
     CONSTRAINT bike_fk FOREIGN KEY (bike_id) REFERENCES bikes (id)
 );
 
-CREATE TABLE public.tickets
+CREATE TABLE IF NOT EXISTS public.tickets
 (
     id            int4         NOT NULL DEFAULT nextval('ticket_id_seq'),
     order_id      int4         NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE public.tickets
     CONSTRAINT unique_ticket UNIQUE (order_id)
 );
 
-CREATE TABLE public.messages
+CREATE TABLE IF NOT EXISTS public.messages
 (
     id        int4         NOT NULL DEFAULT nextval('message_id_seq'),
     date_time timestamp    NULL,
