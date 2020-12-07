@@ -1,9 +1,7 @@
 package ru.sergei.komarov.bikesharingsupport.controllers;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.bikesharingsupport.controllers.abstraction.BasicRestController;
 import ru.sergei.komarov.bikesharingsupport.models.Role;
 import ru.sergei.komarov.bikesharingsupport.models.User;
@@ -31,6 +29,13 @@ public class UsersController extends BasicRestController<User, String> {
                 Role.SUPPORT,
                 Role.ADMIN
         ));
+    }
+
+    @PutMapping("/save")
+    public void save(@RequestBody User user) {
+        String passwordHash = passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordHash);
+        service.save(user);
     }
 
 }
