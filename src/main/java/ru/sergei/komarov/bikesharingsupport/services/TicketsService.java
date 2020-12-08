@@ -31,7 +31,7 @@ public class TicketsService extends BasicDataService<Ticket, Integer> {
         if (Objects.equals(Role.CLIENT.getAuthority(), currentAuthority)) {
             return ticketsRepository.findByUser(username);
         } else if (Objects.equals(Role.SUPPORT.getAuthority(), currentAuthority)) {
-            return ticketsRepository.findByAssignee(username);
+            return ticketsRepository.findByAssigneeOrAssigneeIsNull(user);
         } else if (Objects.equals(Role.ADMIN.getAuthority(), currentAuthority)) {
             return ticketsRepository.findAll();
         }
